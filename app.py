@@ -241,6 +241,9 @@ class AppHandler(BaseHTTPRequestHandler):
             "/app.css": ("app.css", "text/css; charset=utf-8"),
             "/app.js": ("app.js", "text/javascript; charset=utf-8"),
             "/config.js": ("config.js", "text/javascript; charset=utf-8"),
+            "/tokens.css": ("tokens.css", "text/css; charset=utf-8"),
+            "/404": ("404.html", "text/html; charset=utf-8"),
+            "/404.html": ("404.html", "text/html; charset=utf-8"),
         }
         if norm_path in static_files:
             filename, content_type = static_files[norm_path]
@@ -277,7 +280,14 @@ class AppHandler(BaseHTTPRequestHandler):
                     ext, "application/octet-stream"
                 )
             else:
-                self.send_json(404, {"error": "Page not found."})
+                page_404 = WEB / "404.html"
+                if not page_404.is_file():
+                    page_404 = ROOT / "public" / "404.html"
+                try:
+                    body_404 = page_404.read_bytes()
+                    self.send_bytes(404, body_404, "text/html; charset=utf-8")
+                except OSError:
+                    self.send_json(404, {"error": "Page not found."})
                 return
         try:
             body = target.read_bytes()
