@@ -1,0 +1,5 @@
+{
+  "name": "CodeKaro.dev",
+  "description": "CodeKaro — a calmer place to practice Java code with Firebase Authentication (Google, GitHub, and Email OTP).",
+  "requestFramePermissions": []
+}

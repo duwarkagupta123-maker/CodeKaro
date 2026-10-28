@@ -1,46 +1,104 @@
 [
   {
     "name": "Rajeev Ranjan",
-    "role": "Full Stack Developer",
-    "description": "Building scalable web applications with modern technologies and clean code.",
-    "followers": "",
-    "codeCount": "",
+    "role": "Aspiring Software Developer",
+    "year": "2nd Year",
+    "branch": "CSE",
+    "college": "Chitkara University",
+    "did": "Projects: Indimart, Aromatica Project, panel ai agora conversational-ai, sure-path ai application",
+    "skills": [
+      "Java",
+      "Python",
+      "C",
+      "JavaScript",
+      "React",
+      "SQL",
+      "DSA",
+      "Full Stack Development"
+    ],
+    "photoPosition": "center 20%",
     "image": "/assets/team/rajeev.jpg",
     "linkedin": "https://www.linkedin.com/in/rajeev-ranjan-51b163372",
-    "github": "https://github.com/rajeevranjan4812-star",
-    "gradient": "linear-gradient(145deg, #1e3a8a, #2563eb, #06b6d4)"
+    "github": "https://github.com/rajeevranjan4812-star"
   },
   {
     "name": "Shubham Thakur",
-    "role": "Full Stack Developer",
-    "description": "Building scalable web applications with modern technologies and clean code.",
-    "followers": "",
-    "codeCount": "",
+    "role": "Aspiring Full-Stack Developer",
+    "year": "2nd Year",
+    "branch": "B.E. CSE",
+    "college": "Chitkara University (CUIET)",
+    "did": "Projects: CodeKaro (Java practice platform), CookFusion. Currently exploring Full-Stack Development.",
+    "skills": [
+      "Java",
+      "Python",
+      "React",
+      "Node.js",
+      "SQL",
+      "DSA"
+    ],
+    "photoPosition": "center 20%",
     "image": "/assets/team/shubham.jpg",
     "linkedin": "https://www.linkedin.com/in/shubham-thakur-61a82737b",
-    "github": "https://github.com/shubham716259",
-    "gradient": "linear-gradient(145deg, #4c1d95, #7c3aed, #ec4899)"
+    "github": "https://github.com/shubham716259"
   },
   {
     "name": "Duwarka Gupta",
-    "role": "Full Stack Developer",
-    "description": "Building scalable web applications with modern technologies and clean code.",
-    "followers": "",
-    "codeCount": "",
+    "role": "Aspiring Software Developer",
+    "year": "2nd Year",
+    "branch": "CSE (AI & ML)",
+    "college": "Chitkara University, Punjab Campus",
+    "did": "Projects: VedaVigil (healthcare platform for Smart India Hackathon), Risk-Umbrella, Margway",
+    "projects": {
+      "VedaVigil": "healthcare-focused platform developed for the Smart India Hackathon (SIH)",
+      "Risk-Umbrella": "platform to identify insurance coverage gaps and explore risk scenarios",
+      "Margway": "vehicle rental and electric cab booking platform",
+      "FitAccess": "fitness membership platform connecting users with gyms and fitness classes",
+      "Personal Portfolio": "animated developer portfolio built with React and Tailwind CSS",
+      "Python Calculator": "interactive calculator built using Python and Streamlit"
+    },
+    "skills": [
+      "C",
+      "Python",
+      "Java",
+      "C++",
+      "JavaScript",
+      "React.js",
+      "HTML",
+      "CSS",
+      "Tailwind CSS",
+      "SQL",
+      "MySQL",
+      "Git",
+      "GitHub"
+    ],
+    "photoPosition": "center 20%",
     "image": "/assets/team/duwarka.jpg",
     "linkedin": "https://www.linkedin.com/in/duwarka-gupta-42b620396",
-    "github": "https://github.com/duwarkagupta123-maker/",
-    "gradient": "linear-gradient(145deg, #064e3b, #059669, #14b8a6)"
+    "github": "https://github.com/duwarkagupta123-maker/"
   },
   {
     "name": "Sahaj",
-    "role": "Full Stack Developer",
-    "description": "Building scalable web applications with modern technologies and clean code.",
-    "followers": "",
-    "codeCount": "",
+    "role": "Aspiring Software Developer",
+    "year": "2nd Year",
+    "branch": "B.E. CSE",
+    "college": "Chitkara University (CUIET)",
+    "did": "Projects: CodeKaro (Coding Practice Platform), Sahaj AI Agent, Master Quiz, FinTrack AI. Exploring Full-Stack Development. Open to Internships.",
+    "skills": [
+      "Java",
+      "Python",
+      "JavaScript",
+      "React.js",
+      "HTML",
+      "CSS",
+      "Tailwind CSS",
+      "SQL",
+      "MySQL",
+      "Git",
+      "GitHub"
+    ],
+    "photoPosition": "center 25%",
     "image": "/assets/team/sahaj.jpg",
     "linkedin": "https://www.linkedin.com/in/sahaj-%E2%98%86-91a1b8419",
-    "github": "https://github.com/SAHAJCSE",
-    "gradient": "linear-gradient(145deg, #7c2d12, #ea580c, #f59e0b)"
+    "github": "https://github.com/SAHAJCSE"
   }
 ]

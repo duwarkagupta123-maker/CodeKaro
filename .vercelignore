@@ -1,0 +1,12 @@
+app.py
+judge.py
+runner/
+problems/
+reference/
+starters/
+Dockerfile
+.dockerignore
+.venv/
+venv/
+__pycache__/
+*.pyc

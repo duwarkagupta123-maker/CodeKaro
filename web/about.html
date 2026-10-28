@@ -12,6 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Lexend+Giga:wght@100..900&family=Michroma&family=Play:wght@400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Zalando+Sans+Expanded:ital,wght@0,200..900;1,200..900&family=Zen+Dots&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="/theme.js"></script>
   <style>
     @font-face {
@@ -1258,7 +1259,7 @@
       .hero-cta { animation: none; }
     }
   </style>
-  <link rel="stylesheet" href="/about.css">
+  <link rel="stylesheet" href="/about.css?v=5">
 </head>
 <body id="top">
   <header class="navbar">
@@ -1298,6 +1299,7 @@
       <a class="nav-island__brand" href="/" aria-label="CodeKaro home">CodeKaro</a>
       <div class="nav-island__links">
         <a class="nav-island__link" href="/" data-nav-link>Home</a>
+        <a class="nav-island__link" href="/dashboard" data-nav-link>Dashboard</a>
         <a class="nav-island__link" href="/profile" data-nav-link>Profile</a>
         <a class="nav-island__link" href="/practice" data-nav-link>Practice</a>
         <a class="nav-island__link" href="/about" data-nav-link aria-current="page">About</a>
@@ -1307,17 +1309,28 @@
 
   <main>
     <!-- Section 1: Hero -->
-    <section class="about-hero hero" aria-labelledby="about-hero-heading">
+    <section class="about-hero" aria-labelledby="about-hero-heading">
       <canvas class="gradient-ascii-canvas" aria-hidden="true"></canvas>
       <div class="about-hero-container">
         <!-- Left: Editorial Pitch & Actions -->
         <div class="about-hero-left">
           <span class="about-eyebrow">// ABOUT</span>
-          <h1 id="about-hero-heading" class="about-hero-heading">Java practice,<br>tested for real.</h1>
+          <h1 id="about-hero-heading" class="about-hero-heading"><span class="hero-heading-line1">Java practice,</span><br><span class="hero-heading-gradient">tested for real.</span></h1>
           <p class="about-hero-desc">Code-Karo.dev is a Java practice workspace built by four students who wanted a calmer, focused place to master Object-Oriented Programming. Write code, test against real test cases, and see instant feedback.</p>
+          <div class="about-hero-tech" aria-label="Technology stack">
+            <span class="about-hero-tech__label">Runs on</span>
+            <span class="about-hero-tech__chip">Java 17</span>
+            <span class="about-hero-tech__chip">Docker</span>
+          </div>
           <div class="about-hero-actions">
-            <a href="/practice" class="hero-cta">Start practicing</a>
-            <a href="#team" class="pill-btn-outline">Meet the team</a>
+            <a href="/practice" class="about-btn-primary">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              <span>Start practicing</span>
+            </a>
+            <a href="#team" class="about-btn-secondary">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              <span>Meet the team</span>
+            </a>
           </div>
         </div>
 
@@ -1375,27 +1388,29 @@
           <!-- Card 1: Rajeev Ranjan -->
           <article class="team-card">
             <div class="team-card__photo-wrap">
-              <img class="team-card__photo" src="/assets/team/rajeev.jpg" alt="Rajeev Ranjan — Full Stack Developer" loading="lazy">
-              <div class="team-card__photo-gradient"></div>
-              <div class="team-card__identity">
-                <div class="team-card__name-row">
-                  <h3 class="team-card__name">Rajeev Ranjan</h3>
-                  <svg class="verified-badge" viewBox="0 0 24 24" width="18" height="18" aria-label="Verified" fill="currentColor">
-                    <path fill="#38bdf8" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                  </svg>
-                </div>
-                <p class="team-card__role">Full Stack Developer</p>
-              </div>
+              <img class="team-card__photo" src="/assets/team/rajeev.jpg" alt="Rajeev Ranjan" loading="lazy" style="object-position: center 20%;">
+              <div class="team-card__initials">RR</div>
             </div>
-            <p class="team-card__desc">Building scalable web applications with modern technologies and clean code.</p>
+            <h3 class="team-card__name">Rajeev Ranjan</h3>
+            <p class="team-card__role">Aspiring Software Developer</p>
+            <p class="team-card__meta">2nd Year · CSE · Chitkara University</p>
+            <p class="team-card__bio">Projects: Indimart, Aromatica Project, panel ai agora conversational-ai, sure-path ai application</p>
+            <div class="team-card__skills">
+              <span class="team-card__chip">Java</span>
+              <span class="team-card__chip">Python</span>
+              <span class="team-card__chip">C</span>
+              <span class="team-card__chip">JavaScript</span>
+              <span class="team-card__chip">React</span>
+              <span class="team-card__chip">SQL</span>
+              <span class="team-card__chip">DSA</span>
+              <span class="team-card__chip">Full Stack Development</span>
+            </div>
             <div class="team-card__footer">
               <a class="team-card__btn" href="https://www.linkedin.com/in/rajeev-ranjan-51b163372" target="_blank" rel="noopener noreferrer" aria-label="Rajeev Ranjan on LinkedIn">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64c-.88 0-1.6.72-1.6 1.6s.72 1.6 1.6 1.6 1.6-.72 1.6-1.6-.72-1.6-1.6-1.6z"/></svg>
-                <span>LinkedIn</span>
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64c-.88 0-1.6.72-1.6 1.6s.72 1.6 1.6 1.6 1.6-.72 1.6-1.6-.72-1.6-1.6-1.6z"/></svg>
               </a>
               <a class="team-card__btn" href="https://github.com/rajeevranjan4812-star" target="_blank" rel="noopener noreferrer" aria-label="Rajeev Ranjan on GitHub">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-                <span>GitHub</span>
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
               </a>
             </div>
           </article>
@@ -1403,27 +1418,27 @@
           <!-- Card 2: Shubham Thakur -->
           <article class="team-card">
             <div class="team-card__photo-wrap">
-              <img class="team-card__photo" src="/assets/team/shubham.jpg" alt="Shubham Thakur — Full Stack Developer" loading="lazy">
-              <div class="team-card__photo-gradient"></div>
-              <div class="team-card__identity">
-                <div class="team-card__name-row">
-                  <h3 class="team-card__name">Shubham Thakur</h3>
-                  <svg class="verified-badge" viewBox="0 0 24 24" width="18" height="18" aria-label="Verified" fill="currentColor">
-                    <path fill="#38bdf8" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                  </svg>
-                </div>
-                <p class="team-card__role">Full Stack Developer</p>
-              </div>
+              <img class="team-card__photo" src="/assets/team/shubham.jpg" alt="Shubham Thakur" loading="lazy" style="object-position: center 20%;">
+              <div class="team-card__initials">ST</div>
             </div>
-            <p class="team-card__desc">Building scalable web applications with modern technologies and clean code.</p>
+            <h3 class="team-card__name">Shubham Thakur</h3>
+            <p class="team-card__role">Aspiring Full-Stack Developer</p>
+            <p class="team-card__meta">2nd Year · B.E. CSE · Chitkara University (CUIET)</p>
+            <p class="team-card__bio">Projects: CodeKaro (Java practice platform), CookFusion. Currently exploring Full-Stack Development.</p>
+            <div class="team-card__skills">
+              <span class="team-card__chip">Java</span>
+              <span class="team-card__chip">Python</span>
+              <span class="team-card__chip">React</span>
+              <span class="team-card__chip">Node.js</span>
+              <span class="team-card__chip">SQL</span>
+              <span class="team-card__chip">DSA</span>
+            </div>
             <div class="team-card__footer">
               <a class="team-card__btn" href="https://www.linkedin.com/in/shubham-thakur-61a82737b" target="_blank" rel="noopener noreferrer" aria-label="Shubham Thakur on LinkedIn">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64c-.88 0-1.6.72-1.6 1.6s.72 1.6 1.6 1.6 1.6-.72 1.6-1.6-.72-1.6-1.6-1.6z"/></svg>
-                <span>LinkedIn</span>
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64c-.88 0-1.6.72-1.6 1.6s.72 1.6 1.6 1.6 1.6-.72 1.6-1.6-.72-1.6-1.6-1.6z"/></svg>
               </a>
               <a class="team-card__btn" href="https://github.com/shubham716259" target="_blank" rel="noopener noreferrer" aria-label="Shubham Thakur on GitHub">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-                <span>GitHub</span>
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
               </a>
             </div>
           </article>
@@ -1431,27 +1446,34 @@
           <!-- Card 3: Duwarka Gupta -->
           <article class="team-card">
             <div class="team-card__photo-wrap">
-              <img class="team-card__photo" src="/assets/team/duwarka.jpg" alt="Duwarka Gupta — Full Stack Developer" loading="lazy">
-              <div class="team-card__photo-gradient"></div>
-              <div class="team-card__identity">
-                <div class="team-card__name-row">
-                  <h3 class="team-card__name">Duwarka Gupta</h3>
-                  <svg class="verified-badge" viewBox="0 0 24 24" width="18" height="18" aria-label="Verified" fill="currentColor">
-                    <path fill="#38bdf8" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                  </svg>
-                </div>
-                <p class="team-card__role">Full Stack Developer</p>
-              </div>
+              <img class="team-card__photo" src="/assets/team/duwarka.jpg" alt="Duwarka Gupta" loading="lazy" style="object-position: center 20%;">
+              <div class="team-card__initials">DG</div>
             </div>
-            <p class="team-card__desc">Building scalable web applications with modern technologies and clean code.</p>
+            <h3 class="team-card__name">Duwarka Gupta</h3>
+            <p class="team-card__role">Aspiring Software Developer</p>
+            <p class="team-card__meta">2nd Year · CSE (AI &amp; ML) · Chitkara University, Punjab Campus</p>
+            <p class="team-card__bio">Projects: VedaVigil (healthcare platform for Smart India Hackathon), Risk-Umbrella, Margway</p>
+            <div class="team-card__skills">
+              <span class="team-card__chip">C</span>
+              <span class="team-card__chip">Python</span>
+              <span class="team-card__chip">Java</span>
+              <span class="team-card__chip">C++</span>
+              <span class="team-card__chip">JavaScript</span>
+              <span class="team-card__chip">React.js</span>
+              <span class="team-card__chip">HTML</span>
+              <span class="team-card__chip">CSS</span>
+              <span class="team-card__chip">Tailwind CSS</span>
+              <span class="team-card__chip">SQL</span>
+              <span class="team-card__chip">MySQL</span>
+              <span class="team-card__chip">Git</span>
+              <span class="team-card__chip">GitHub</span>
+            </div>
             <div class="team-card__footer">
               <a class="team-card__btn" href="https://www.linkedin.com/in/duwarka-gupta-42b620396" target="_blank" rel="noopener noreferrer" aria-label="Duwarka Gupta on LinkedIn">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64c-.88 0-1.6.72-1.6 1.6s.72 1.6 1.6 1.6 1.6-.72 1.6-1.6-.72-1.6-1.6-1.6z"/></svg>
-                <span>LinkedIn</span>
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64c-.88 0-1.6.72-1.6 1.6s.72 1.6 1.6 1.6 1.6-.72 1.6-1.6-.72-1.6-1.6-1.6z"/></svg>
               </a>
               <a class="team-card__btn" href="https://github.com/duwarkagupta123-maker/" target="_blank" rel="noopener noreferrer" aria-label="Duwarka Gupta on GitHub">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-                <span>GitHub</span>
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
               </a>
             </div>
           </article>
@@ -1459,27 +1481,32 @@
           <!-- Card 4: Sahaj -->
           <article class="team-card">
             <div class="team-card__photo-wrap">
-              <img class="team-card__photo" src="/assets/team/sahaj.jpg" alt="Sahaj — Full Stack Developer" loading="lazy">
-              <div class="team-card__photo-gradient"></div>
-              <div class="team-card__identity">
-                <div class="team-card__name-row">
-                  <h3 class="team-card__name">Sahaj</h3>
-                  <svg class="verified-badge" viewBox="0 0 24 24" width="18" height="18" aria-label="Verified" fill="currentColor">
-                    <path fill="#38bdf8" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                  </svg>
-                </div>
-                <p class="team-card__role">Full Stack Developer</p>
-              </div>
+              <img class="team-card__photo" src="/assets/team/sahaj.jpg" alt="Sahaj" loading="lazy" style="object-position: center 25%;">
+              <div class="team-card__initials">S</div>
             </div>
-            <p class="team-card__desc">Building scalable web applications with modern technologies and clean code.</p>
+            <h3 class="team-card__name">Sahaj</h3>
+            <p class="team-card__role">Aspiring Software Developer</p>
+            <p class="team-card__meta">2nd Year · B.E. CSE · Chitkara University (CUIET)</p>
+            <p class="team-card__bio">Projects: CodeKaro (Coding Practice Platform), Sahaj AI Agent, Master Quiz, FinTrack AI. Exploring Full-Stack Development. Open to Internships.</p>
+            <div class="team-card__skills">
+              <span class="team-card__chip">Java</span>
+              <span class="team-card__chip">Python</span>
+              <span class="team-card__chip">JavaScript</span>
+              <span class="team-card__chip">React.js</span>
+              <span class="team-card__chip">HTML</span>
+              <span class="team-card__chip">CSS</span>
+              <span class="team-card__chip">Tailwind CSS</span>
+              <span class="team-card__chip">SQL</span>
+              <span class="team-card__chip">MySQL</span>
+              <span class="team-card__chip">Git</span>
+              <span class="team-card__chip">GitHub</span>
+            </div>
             <div class="team-card__footer">
               <a class="team-card__btn" href="https://www.linkedin.com/in/sahaj-%E2%98%86-91a1b8419" target="_blank" rel="noopener noreferrer" aria-label="Sahaj on LinkedIn">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64c-.88 0-1.6.72-1.6 1.6s.72 1.6 1.6 1.6 1.6-.72 1.6-1.6-.72-1.6-1.6-1.6z"/></svg>
-                <span>LinkedIn</span>
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64c-.88 0-1.6.72-1.6 1.6s.72 1.6 1.6 1.6 1.6-.72 1.6-1.6-.72-1.6-1.6-1.6z"/></svg>
               </a>
               <a class="team-card__btn" href="https://github.com/SAHAJCSE" target="_blank" rel="noopener noreferrer" aria-label="Sahaj on GitHub">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-                <span>GitHub</span>
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
               </a>
             </div>
           </article>
@@ -1494,6 +1521,7 @@
       <span class="footer-tag">ready to practice?</span>
       <span class="footer-headline footer-job-title">write Java.<br>run real tests.</span>
       <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="/dashboard">Dashboard</a>
         <a href="/practice">Practice</a>
         <a href="/profile">Profile</a>
         <a href="/about">About</a>
@@ -1543,6 +1571,6 @@
   <script src="/gradient-ascii.js" defer></script>
   <script src="/footer-contact.js" defer></script>
   <script src="/config.js" defer></script>
-  <script src="/about.js" defer></script>
+  <script src="/about.js?v=5" defer></script>
 </body>
 </html>

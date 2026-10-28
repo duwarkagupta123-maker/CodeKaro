@@ -2,13 +2,11 @@
 """Start the local browser app for Code-Karo.dev Java practice problems."""
 import argparse
 import json
-import os
 import re
 import sys
-import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import unquote, urlencode, urlparse
+from urllib.parse import unquote, urlparse
 
 from runner.core import (
     MAX_REQUEST_BYTES,
@@ -33,11 +31,35 @@ def get_problems_meta():
 
 
 def get_problem(problem_id):
-    if not PROBLEM_ID.fullmatch(problem_id) or problem_id not in get_problem_ids():
+    if not PROBLEM_ID.fullmatch(problem_id):
         return None
 
+    meta = get_problems_meta().get(problem_id, {})
     problem_dir = PROBLEMS / problem_id
-    readme = (problem_dir / "README.md").read_text(encoding="utf-8")
+
+    readme = ""
+    solution = ""
+    if (problem_dir / "README.md").is_file():
+        try:
+            readme = (problem_dir / "README.md").read_text(encoding="utf-8")
+        except Exception:
+            readme = ""
+    if (problem_dir / "Solution.java").is_file():
+        try:
+            solution = (problem_dir / "Solution.java").read_text(encoding="utf-8")
+        except Exception:
+            solution = ""
+
+    # Fallback to pre-bundled data if available
+    if not readme or not solution:
+        try:
+            from api.problems_data import PROBLEMS as BUNDLED
+            bundled = BUNDLED.get(problem_id)
+            if bundled:
+                return bundled
+        except Exception:
+            pass
+
     title = next(
         (line[2:].strip() for line in readme.splitlines() if line.startswith("# ")),
         problem_id.replace("-", " ").title(),
@@ -48,16 +70,28 @@ def get_problem(problem_id):
             for line in readme.splitlines()
             if line.strip() and not line.startswith("#") and not line.startswith("*Source:")
         ),
-        "",
+        meta.get("summary", ""),
     )
-    solution = (problem_dir / "Solution.java").read_text(encoding="utf-8")
     reference_path = ROOT / "reference" / problem_id / "Solution.java"
-    reference_solution = reference_path.read_text(encoding="utf-8") if reference_path.is_file() else ""
+    reference_solution = ""
+    if reference_path.is_file():
+        try:
+            reference_solution = reference_path.read_text(encoding="utf-8")
+        except Exception:
+            reference_solution = ""
+
     starter_path = ROOT / "starters" / problem_id / "Solution.java"
-    starter_solution = starter_path.read_text(encoding="utf-8") if starter_path.is_file() else solution
-    meta = get_problems_meta().get(problem_id, {})
+    starter_solution = solution
+    if starter_path.is_file():
+        try:
+            starter_solution = starter_path.read_text(encoding="utf-8")
+        except Exception:
+            starter_solution = solution
+
     return {
         "id": problem_id,
+        "display_number": meta.get("display_number", 0),
+        "display_id": meta.get("id", "00"),
         "title": title,
         "summary": summary,
         "readme": readme,
@@ -66,6 +100,12 @@ def get_problem(problem_id):
         "reference": reference_solution,
         "difficulty": meta.get("difficulty", "Easy"),
         "topics": meta.get("topics", []),
+        "languages": meta.get("languages", ["Java"]),
+        "path_id": meta.get("path_id", "java-basics"),
+        "path_name": meta.get("path_name", "Java Basics"),
+        "order_in_path": meta.get("order_in_path", 1),
+        "collection_ids": meta.get("collection_ids", []),
+        "review_needed": meta.get("review_needed", False),
         "hints": meta.get("hints", []),
         "sample_cases": meta.get("sample_cases", []),
     }
@@ -116,26 +156,47 @@ class AppHandler(BaseHTTPRequestHandler):
         return payload
 
     def do_GET(self):
-        path = unquote(urlparse(self.path).path).rstrip("/")
+        try:
+            path = unquote(urlparse(self.path).path).rstrip("/")
 
-        if path in ("/health", "/api/health"):
-            self.send_json(200, {"status": "ok"})
-            return
+            if path in ("/health", "/api/health"):
+                self.send_json(200, {"status": "ok"})
+                return
 
-        if path in ("/api/problems", "/problems"):
-            meta_all = get_problems_meta()
-            problems = []
-            for problem_id in get_problem_ids():
-                problem = get_problem(problem_id)
-                m = meta_all.get(problem_id, {})
-                problems.append({
-                    "id": problem["id"],
-                    "title": problem["title"],
-                    "summary": problem["summary"],
-                    "difficulty": m.get("difficulty", "Easy"),
-                    "topics": m.get("topics", []),
+            if path == "/api/problems":
+                meta_all = get_problems_meta()
+                problems = []
+                for problem_id in get_problem_ids():
+                    problem = get_problem(problem_id)
+                    if not problem:
+                        continue
+                    m = meta_all.get(problem_id, {})
+                    problems.append({
+                        "id": problem["id"],
+                        "display_number": m.get("display_number", problem.get("display_number", 0)),
+                        "display_id": m.get("id", problem.get("display_id", "00")),
+                        "title": problem.get("title", problem_id),
+                        "summary": problem.get("summary", ""),
+                        "difficulty": m.get("difficulty", problem.get("difficulty", "Easy")),
+                        "topics": m.get("topics", problem.get("topics", [])),
+                        "languages": m.get("languages", problem.get("languages", ["Java"])),
+                        "path_id": m.get("path_id", problem.get("path_id", "java-basics")),
+                        "path_name": m.get("path_name", problem.get("path_name", "Java Basics")),
+                        "order_in_path": m.get("order_in_path", problem.get("order_in_path", 1)),
+                        "collection_ids": m.get("collection_ids", problem.get("collection_ids", [])),
+                        "review_needed": m.get("review_needed", problem.get("review_needed", False)),
+                    })
+                paths_data = meta_all.get("_paths", [])
+                collections_data = meta_all.get("_collections", [])
+                self.send_json(200, {
+                    "problems": problems,
+                    "paths": paths_data,
+                    "collections": collections_data,
+                    "status": "ok"
                 })
-            self.send_json(200, {"problems": problems, "status": "ok"})
+                return
+        except Exception as error:
+            self.send_json(500, {"error": str(error), "status": "error"})
             return
 
         match = re.fullmatch(r"(?:/api)?/problems/([a-z0-9-]+)", path)
@@ -148,82 +209,22 @@ class AppHandler(BaseHTTPRequestHandler):
             self.send_json(200, problem)
             return
 
-        # ── GitHub OAuth callback (server-side token exchange) ──
-        if path == "/api/github-callback":
-            code = urlparse(self.path).query
-            code_val = next(
-                (v for k, v in (p.split("=", 1) for p in code.split("&") if "=" in p) if k == "code"),
-                None,
-            )
-            if not code_val:
-                self.send_json(400, {"error": "Missing code parameter."})
-                return
-            client_id     = os.environ.get("GITHUB_CLIENT_ID", "")
-            client_secret = os.environ.get("GITHUB_CLIENT_SECRET", "")
-            if not client_id or not client_secret:
-                self.send_json(501, {
-                    "error": "GitHub OAuth not configured. Set GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET env vars."
-                })
-                return
-            try:
-                # Exchange code for access token
-                token_data = urlencode({
-                    "client_id":     client_id,
-                    "client_secret": client_secret,
-                    "code":          code_val,
-                }).encode("utf-8")
-                req = urllib.request.Request(
-                    "https://github.com/login/oauth/access_token",
-                    data=token_data,
-                    headers={"Accept": "application/json"},
-                    method="POST",
-                )
-                with urllib.request.urlopen(req, timeout=10) as resp:
-                    token_json = json.loads(resp.read())
-                access_token = token_json.get("access_token")
-                if not access_token:
-                    self.send_json(401, {"error": token_json.get("error_description", "Token exchange failed.")})
-                    return
-                # Fetch GitHub user profile
-                user_req = urllib.request.Request(
-                    "https://api.github.com/user",
-                    headers={
-                        "Authorization": f"Bearer {access_token}",
-                        "Accept": "application/vnd.github+json",
-                        "User-Agent": "CodeKaro-App",
-                    },
-                )
-                with urllib.request.urlopen(user_req, timeout=10) as resp:
-                    user_json = json.loads(resp.read())
-                self.send_json(200, {"access_token": access_token, "user": user_json})
-            except Exception as exc:
-                self.send_json(500, {"error": f"GitHub OAuth error: {exc}"})
+        if path in ("/problems", "/problems.html"):
+            self.send_response(302)
+            self.send_header("Location", "/practice")
+            self.end_headers()
             return
 
         norm_path = "/" if not path else path
         static_files = {
             "/": ("index.html", "text/html; charset=utf-8"),
             "/index.html": ("index.html", "text/html; charset=utf-8"),
-            "/auth": ("auth.html", "text/html; charset=utf-8"),
-            "/auth.html": ("auth.html", "text/html; charset=utf-8"),
-            "/problems": ("problems.html", "text/html; charset=utf-8"),
-            "/problems.html": ("problems.html", "text/html; charset=utf-8"),
-            "/problems.css": ("problems.css", "text/css; charset=utf-8"),
-            "/problems.js": ("problems.js", "text/javascript; charset=utf-8"),
+            "/dashboard": ("dashboard.html", "text/html; charset=utf-8"),
+            "/dashboard.html": ("dashboard.html", "text/html; charset=utf-8"),
             "/practice": ("practice.html", "text/html; charset=utf-8"),
             "/practice.html": ("practice.html", "text/html; charset=utf-8"),
             "/profile": ("profile.html", "text/html; charset=utf-8"),
             "/profile.html": ("profile.html", "text/html; charset=utf-8"),
-            "/about": ("about.html", "text/html; charset=utf-8"),
-            "/about.html": ("about.html", "text/html; charset=utf-8"),
-            "/about.css": ("about.css", "text/css; charset=utf-8"),
-            "/about.js": ("about.js", "text/javascript; charset=utf-8"),
-            "/team.js": ("team.js", "text/javascript; charset=utf-8"),
-            "/team.json": ("team.json", "application/json; charset=utf-8"),
-            "/assets/team/rajeev.jpg": ("assets/team/rajeev.jpg", "image/jpeg"),
-            "/assets/team/shubham.jpg": ("assets/team/shubham.jpg", "image/jpeg"),
-            "/assets/team/duwarka.jpg": ("assets/team/duwarka.jpg", "image/jpeg"),
-            "/assets/team/sahaj.jpg": ("assets/team/sahaj.jpg", "image/jpeg"),
             "/navbar.css": ("navbar.css", "text/css; charset=utf-8"),
             "/navbar.js": ("navbar.js", "text/javascript; charset=utf-8"),
             "/gooey-nav.css": ("gooey-nav.css", "text/css; charset=utf-8"),
@@ -289,8 +290,26 @@ class AppHandler(BaseHTTPRequestHandler):
                 except OSError:
                     self.send_json(404, {"error": "Page not found."})
                 return
+            "/assets/index.js": ("assets/index.js", "application/javascript; charset=utf-8"),
+            "/assets/index.css": ("assets/index.css", "text/css; charset=utf-8"),
+        }
+        if norm_path.startswith("/assets/"):
+            rel_asset = norm_path.lstrip("/")
+            for search_dir in (WEB, ROOT / "dist", ROOT / "public"):
+                candidate = search_dir / rel_asset
+                if candidate.is_file():
+                    content_type = "application/javascript; charset=utf-8" if norm_path.endswith(".js") else ("text/css; charset=utf-8" if norm_path.endswith(".css") else "application/octet-stream")
+                    try:
+                        self.send_bytes(200, candidate.read_bytes(), content_type)
+                        return
+                    except OSError:
+                        pass
+        if norm_path not in static_files:
+            self.send_json(404, {"error": "Page not found."})
+            return
+        filename, content_type = static_files[norm_path]
         try:
-            body = target.read_bytes()
+            body = (WEB / filename).read_bytes()
         except OSError as error:
             self.send_json(500, {"error": f"Could not read app file: {error}"})
             return

@@ -528,18 +528,195 @@
     @keyframes spin-ring { to { transform: rotate(360deg); } }
 
     /* ══════════════════════════════════════════════════════
-       11. RESPONSIVE
+       11. OTP VERIFICATION STEP & FIREBASE STATUS
+       ══════════════════════════════════════════════════════ */
+    .otp-step {
+      display: none;
+      animation: fadeSlideIn .24s ease-out;
+    }
+    .otp-step.is-active {
+      display: block;
+    }
+    .signup-step-form.is-hidden {
+      display: none;
+    }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .otp-email-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      margin: 6px 0 18px;
+      border-radius: 999px;
+      background: var(--ck-accent-soft);
+      border: 1px solid var(--ck-border-hover);
+      color: var(--ck-text);
+      font-size: 12.5px;
+      font-weight: 600;
+      max-width: 100%;
+    }
+    .otp-email-pill span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .otp-email-change {
+      background: none;
+      border: none;
+      color: var(--ck-link);
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+      flex-shrink: 0;
+    }
+    .otp-email-change:hover { color: var(--ck-accent); }
+
+    .otp-preview-banner {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      border-radius: var(--r-md);
+      background: rgba(38, 215, 244, 0.08);
+      border: 1px solid rgba(38, 215, 244, 0.35);
+      color: var(--ck-text);
+      font-size: 12.5px;
+    }
+    .otp-preview-banner.is-visible {
+      display: flex;
+    }
+    .otp-preview-code {
+      font-family: "Michroma", monospace;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--ck-success);
+    }
+    .otp-autofill-btn {
+      padding: 5px 10px;
+      border-radius: var(--r-sm);
+      border: 1px solid rgba(38, 215, 244, 0.45);
+      background: rgba(38, 215, 244, 0.14);
+      color: var(--ck-text);
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background .15s, border-color .15s;
+    }
+    .otp-autofill-btn:hover {
+      background: rgba(38, 215, 244, 0.25);
+      border-color: var(--ck-success);
+    }
+
+    .otp-inputs {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin: 8px 0 6px;
+    }
+    .otp-digit-input {
+      width: 100%;
+      height: 52px;
+      text-align: center;
+      font-family: "Michroma", monospace;
+      font-size: 18px;
+      font-weight: 700;
+      border: 1px solid var(--ck-border);
+      border-radius: var(--r-md);
+      background: var(--ck-input-bg);
+      color: var(--ck-text);
+      outline: none;
+      transition: border-color .18s, box-shadow .18s, background .18s;
+    }
+    .otp-digit-input:focus {
+      border-color: var(--ck-border-focus);
+      background: var(--ck-accent-soft);
+      box-shadow: 0 0 0 3px var(--ck-accent-glow);
+    }
+    .otp-digit-input.has-error {
+      border-color: var(--ck-error);
+    }
+
+    .otp-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 12px;
+      font-size: 12.5px;
+      color: var(--ck-muted);
+    }
+    .otp-resend-btn {
+      background: none;
+      border: none;
+      color: var(--ck-link);
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+    }
+    .otp-resend-btn:disabled {
+      color: var(--ck-muted);
+      opacity: 0.6;
+      cursor: not-allowed;
+      text-decoration: none;
+    }
+    .otp-resend-btn:not(:disabled):hover {
+      color: var(--ck-accent);
+      text-decoration: underline;
+    }
+
+    .provider-help-box {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: var(--r-md);
+      border: 1px solid rgba(255, 180, 59, 0.4);
+      background: rgba(255, 180, 59, 0.08);
+      color: var(--ck-text);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .provider-help-box.is-visible { display: block; }
+    .provider-help-box code {
+      font-family: monospace;
+      font-size: 11px;
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: rgba(0,0,0,0.25);
+      word-break: break-all;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       12. RESPONSIVE
        ══════════════════════════════════════════════════════ */
     @media (max-width: 760px) {
       .auth-page { grid-template-columns: 1fr; }
       .auth-panel-left { display: none; }
       .auth-panel-right { padding: clamp(28px,6vh,48px) clamp(20px,6vw,32px); }
     }
-    @media (max-width: 400px) { .oauth-buttons { flex-direction: column; } }
+    @media (max-width: 400px) {
+      .oauth-buttons { flex-direction: column; }
+      .otp-inputs { gap: 5px; }
+      .otp-digit-input { height: 46px; font-size: 15px; }
+    }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
     }
   </style>
+  <script type="module" src="/src/auth-client.ts"></script>
 </head>
 <body>
 
@@ -770,95 +947,147 @@
             </button>
           </div>
 
+          <div id="provider-help-login" class="provider-help-box" role="region" aria-label="Provider configuration note"></div>
+
           <p class="auth-switch">Don't have an account?
             <a href="#" onclick="switchTab('signup');return false;">Sign up free</a></p>
         </div><!-- /panel-login -->
 
         <!-- ── SIGNUP PANEL ── -->
         <div id="panel-signup" class="auth-panel" role="tabpanel" aria-labelledby="tab-signup">
-          <h1 class="auth-heading">Create account</h1>
-          <p class="auth-sub">Start your CodeKaro journey today — it's free.</p>
+          <!-- STEP 1: Account Details Form -->
+          <div id="signup-step-1" class="signup-step-form">
+            <h1 class="auth-heading">Create account</h1>
+            <p class="auth-sub">Start your CodeKaro journey today — verified with Email OTP, Google, or GitHub.</p>
 
-          <form id="signup-form" novalidate onsubmit="handleSignup(event)">
-            <div class="form-group">
-              <label class="form-label" for="signup-name">Full name</label>
-              <div class="input-icon-wrap">
-                <input id="signup-name" class="form-input" type="text"
-                       placeholder="Your Name" autocomplete="name"
-                       aria-required="true" aria-describedby="signup-name-err"/>
-                <span class="form-input-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.6"/><path d="M4.8 20c.7-3.3 3.2-5.1 7.2-5.1s6.5 1.8 7.2 5.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                </span>
+            <form id="signup-form" novalidate onsubmit="handleSignup(event)">
+              <div class="form-group">
+                <label class="form-label" for="signup-name">Full name</label>
+                <div class="input-icon-wrap">
+                  <input id="signup-name" class="form-input" type="text"
+                         placeholder="Your Name" autocomplete="name"
+                         aria-required="true" aria-describedby="signup-name-err"/>
+                  <span class="form-input-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.6"/><path d="M4.8 20c.7-3.3 3.2-5.1 7.2-5.1s6.5 1.8 7.2 5.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  </span>
+                </div>
+                <p id="signup-name-err" class="form-error" role="alert"></p>
               </div>
-              <p id="signup-name-err" class="form-error" role="alert"></p>
+
+              <div class="form-group">
+                <label class="form-label" for="signup-email">Email address</label>
+                <div class="input-icon-wrap">
+                  <input id="signup-email" class="form-input" type="email"
+                         placeholder="you@example.com" autocomplete="email"
+                         aria-required="true" aria-describedby="signup-email-err"/>
+                  <span class="form-input-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M2 8l10 7 10-7" stroke="currentColor" stroke-width="1.6"/></svg>
+                  </span>
+                </div>
+                <p id="signup-email-err" class="form-error" role="alert"></p>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="signup-pass">Password</label>
+                <div class="input-icon-wrap">
+                  <input id="signup-pass" class="form-input" type="password"
+                         placeholder="Min. 8 characters" autocomplete="new-password"
+                         aria-required="true" aria-describedby="signup-pass-err"
+                         oninput="updateStrength(this.value)"/>
+                  <button class="form-input-icon" type="button"
+                          onclick="togglePwd('signup-pass',this)" aria-label="Toggle password visibility">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M2 12c2.4-5 5.8-7.5 10-7.5s7.6 2.5 10 7.5c-2.4 5-5.8 7.5-10 7.5S4.4 17 2 12Z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/></svg>
+                  </button>
+                </div>
+                <div class="strength-bar" role="progressbar" aria-label="Password strength" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0">
+                  <span class="strength-seg" id="sseg1"></span>
+                  <span class="strength-seg" id="sseg2"></span>
+                  <span class="strength-seg" id="sseg3"></span>
+                  <span class="strength-seg" id="sseg4"></span>
+                </div>
+                <p id="signup-pass-err" class="form-error" role="alert"></p>
+              </div>
+
+              <label class="form-check" style="margin-bottom:4px">
+                <input type="checkbox" id="signup-terms" aria-required="true">
+                I agree to the
+                <a class="form-link" href="#" style="margin-left:4px">Terms</a>&nbsp;&amp;&nbsp;<a class="form-link" href="#">Privacy Policy</a>
+              </label>
+              <p id="signup-terms-err" class="form-error" role="alert"></p>
+
+              <button id="signup-submit" class="auth-submit" type="submit">
+                <span>Send Verification OTP</span>
+              </button>
+            </form>
+
+            <div class="auth-divider" aria-hidden="true">or sign up with</div>
+
+            <div class="oauth-buttons">
+              <button class="oauth-btn" type="button" id="google-signup-btn"
+                      onclick="startGoogleOAuth()" aria-label="Sign up with Google">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                  <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                  <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                  <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+                Google
+              </button>
+              <button class="oauth-btn" type="button" id="github-signup-btn"
+                      onclick="startGitHubOAuth()" aria-label="Sign up with GitHub">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.53v-2.08c-3.1.67-3.75-1.32-3.75-1.32-.5-1.28-1.24-1.62-1.24-1.62-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 1.7 2.62 1.21 3.26.93.1-.72.39-1.21.7-1.49-2.48-.28-5.09-1.24-5.09-5.52 0-1.22.44-2.21 1.15-2.99-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.05 1.14a10.6 10.6 0 0 1 5.55 0c2.11-1.44 3.05-1.14 3.05-1.14.61 1.54.23 2.68.11 2.96.72.78 1.15 1.77 1.15 2.99 0 4.29-2.61 5.24-5.1 5.51.4.35.75 1.02.75 2.06V22c0 .29.2.63.76.53A11.1 11.1 0 0 0 12 .9Z"/>
+                </svg>
+                GitHub
+              </button>
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="signup-email">Email address</label>
-              <div class="input-icon-wrap">
-                <input id="signup-email" class="form-input" type="email"
-                       placeholder="you@example.com" autocomplete="email"
-                       aria-required="true" aria-describedby="signup-email-err"/>
-                <span class="form-input-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M2 8l10 7 10-7" stroke="currentColor" stroke-width="1.6"/></svg>
-                </span>
-              </div>
-              <p id="signup-email-err" class="form-error" role="alert"></p>
+            <div id="provider-help-signup" class="provider-help-box" role="region" aria-label="Provider configuration note"></div>
+          </div>
+
+          <!-- STEP 2: 6-Digit Email OTP Verification -->
+          <div id="signup-otp-step" class="otp-step" aria-live="polite">
+            <h1 class="auth-heading">Verify your email</h1>
+            <p class="auth-sub" style="margin-bottom:8px;">Enter the 6-digit verification code sent to:</p>
+            <div class="otp-email-pill">
+              <span id="otp-target-email">you@example.com</span>
+              <button type="button" class="otp-email-change" onclick="backToSignupForm()">Change</button>
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="signup-pass">Password</label>
-              <div class="input-icon-wrap">
-                <input id="signup-pass" class="form-input" type="password"
-                       placeholder="Min. 8 characters" autocomplete="new-password"
-                       aria-required="true" aria-describedby="signup-pass-err"
-                       oninput="updateStrength(this.value)"/>
-                <button class="form-input-icon" type="button"
-                        onclick="togglePwd('signup-pass',this)" aria-label="Toggle password visibility">
-                  <svg viewBox="0 0 24 24" fill="none"><path d="M2 12c2.4-5 5.8-7.5 10-7.5s7.6 2.5 10 7.5c-2.4 5-5.8 7.5-10 7.5S4.4 17 2 12Z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/></svg>
+            <!-- Preview banner when SMTP is not configured in environment -->
+            <div id="otp-preview-banner" class="otp-preview-banner" role="status">
+              <div>
+                <div style="font-size:11px;color:var(--ck-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;">Verification Code</div>
+                <span id="otp-preview-code" class="otp-preview-code">------</span>
+              </div>
+              <button type="button" class="otp-autofill-btn" onclick="autofillPreviewOtp()">Fill Code</button>
+            </div>
+
+            <form id="otp-verify-form" novalidate onsubmit="handleVerifyOtp(event)">
+              <div class="form-group">
+                <label class="form-label" for="otp-d1">6-Digit OTP Code</label>
+                <div class="otp-inputs" id="otp-inputs-container">
+                  <input id="otp-d1" class="otp-digit-input" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" aria-label="Digit 1" />
+                  <input id="otp-d2" class="otp-digit-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 2" />
+                  <input id="otp-d3" class="otp-digit-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 3" />
+                  <input id="otp-d4" class="otp-digit-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 4" />
+                  <input id="otp-d5" class="otp-digit-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 5" />
+                  <input id="otp-d6" class="otp-digit-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 6" />
+                </div>
+                <p id="signup-otp-err" class="form-error" role="alert"></p>
+              </div>
+
+              <div class="otp-meta-row">
+                <span>Expires in <strong id="otp-expiry-timer">10:00</strong></span>
+                <button type="button" id="otp-resend-btn" class="otp-resend-btn" onclick="resendSignupOtp()" disabled>
+                  Resend OTP (30s)
                 </button>
               </div>
-              <div class="strength-bar" role="progressbar" aria-label="Password strength" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0">
-                <span class="strength-seg" id="sseg1"></span>
-                <span class="strength-seg" id="sseg2"></span>
-                <span class="strength-seg" id="sseg3"></span>
-                <span class="strength-seg" id="sseg4"></span>
-              </div>
-              <p id="signup-pass-err" class="form-error" role="alert"></p>
-            </div>
 
-            <label class="form-check" style="margin-bottom:4px">
-              <input type="checkbox" id="signup-terms" aria-required="true">
-              I agree to the
-              <a class="form-link" href="#" style="margin-left:4px">Terms</a>&nbsp;&amp;&nbsp;<a class="form-link" href="#">Privacy Policy</a>
-            </label>
-            <p id="signup-terms-err" class="form-error" role="alert"></p>
-
-            <button id="signup-submit" class="auth-submit" type="submit">
-              <span>Create My Account</span>
-            </button>
-          </form>
-
-          <div class="auth-divider" aria-hidden="true">or sign up with</div>
-
-          <div class="oauth-buttons">
-            <button class="oauth-btn" type="button"
-                    onclick="startGoogleOAuth()" aria-label="Sign up with Google">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-              </svg>
-              Google
-            </button>
-            <button class="oauth-btn" type="button"
-                    onclick="startGitHubOAuth()" aria-label="Sign up with GitHub">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.53v-2.08c-3.1.67-3.75-1.32-3.75-1.32-.5-1.28-1.24-1.62-1.24-1.62-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 1.7 2.62 1.21 3.26.93.1-.72.39-1.21.7-1.49-2.48-.28-5.09-1.24-5.09-5.52 0-1.22.44-2.21 1.15-2.99-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.05 1.14a10.6 10.6 0 0 1 5.55 0c2.11-1.44 3.05-1.14 3.05-1.14.61 1.54.23 2.68.11 2.96.72.78 1.15 1.77 1.15 2.99 0 4.29-2.61 5.24-5.1 5.51.4.35.75 1.02.75 2.06V22c0 .29.2.63.76.53A11.1 11.1 0 0 0 12 .9Z"/>
-              </svg>
-              GitHub
-            </button>
+              <button id="otp-verify-submit" class="auth-submit" type="submit">
+                <span>Verify OTP &amp; Create Account</span>
+              </button>
+            </form>
           </div>
 
           <p class="auth-switch">Already have an account?
@@ -879,7 +1108,7 @@
   </div>
 
   <!-- OAuth loading overlay -->
-  <div class="oauth-spinner" id="oauth-spinner" role="status" aria-live="polite" aria-label="Connecting to OAuth provider">
+  <div class="oauth-spinner" id="oauth-spinner" role="status" aria-live="polite" aria-label="Connecting to authentication provider">
     <div class="spinner-ring"></div>
     <span id="spinner-msg">Connecting…</span>
   </div>
@@ -982,13 +1211,15 @@
     const cleanHandle = (userObj.username || (userObj.email ? userObj.email.split('@')[0] : 'Coder'))
       .toLowerCase().replace(/[^a-z0-9_-]/g, '_');
     const session = {
-      id: userObj.id || ("u_" + cleanHandle + "_" + Date.now().toString(36)),
+      id: userObj.id || userObj.uid || ("u_" + cleanHandle + "_" + Date.now().toString(36)),
+      uid: userObj.uid || userObj.id || "",
       username: cleanHandle,
-      name: userObj.name || userObj.username || cleanHandle,
+      name: userObj.name || userObj.displayName || userObj.username || cleanHandle,
       email: userObj.email || "",
-      picture: userObj.picture || userObj.avatar || "",
-      avatar: userObj.picture || userObj.avatar || "",
-      provider: userObj.provider || "local",
+      picture: userObj.picture || userObj.avatar || userObj.photoURL || "",
+      avatar: userObj.picture || userObj.avatar || userObj.photoURL || "",
+      provider: userObj.provider || "email",
+      otpVerified: Boolean(userObj.otpVerified ?? true),
       createdAt: userObj.createdAt || Date.now()
     };
     try {
@@ -1000,219 +1231,103 @@
     return session;
   }
 
-  /* ═══════════════════════════════════════════════════════════
-     OAUTH CONFIGURATION
-     ─────────────────────────────────────────────────────────
-     Fill in these values from your OAuth app consoles:
-
-     Google:  https://console.cloud.google.com/ → APIs & Services → Credentials
-              Add "http://localhost:8000" to Authorised JavaScript origins
-              Add "http://localhost:8000/auth.html" to Authorised redirect URIs
-
-     GitHub:  https://github.com/settings/developers → New OAuth App
-              Homepage URL:      http://localhost:8000
-              Callback URL:      http://localhost:8000/auth.html
-
-     For production, replace localhost URLs with your Render/Vercel domain.
-     ═══════════════════════════════════════════════════════════ */
-  const OAUTH_CONFIG = {
-    google: {
-      clientId: 'YOUR_GOOGLE_CLIENT_ID',           // ← paste your Google Client ID
-      redirectUri: window.location.origin + '/auth.html',
-      scope: 'openid email profile',
-    },
-    github: {
-      clientId: 'YOUR_GITHUB_CLIENT_ID',            // ← paste your GitHub Client ID
-      redirectUri: window.location.origin + '/auth.html',
-      scope: 'read:user user:email',
-    },
-  };
-
-  /* ═══════════════════════════════════════════════════════════
-     GOOGLE OAUTH
-     ═══════════════════════════════════════════════════════════ */
-  function startGoogleOAuth() {
-    const { clientId, redirectUri, scope } = OAUTH_CONFIG.google;
-
-    if (!clientId || clientId === 'YOUR_GOOGLE_CLIENT_ID') {
-      // Demo instant sign-in with simulated Google account
-      showSpinner('Signing in with Google Demo Account…');
-      setTimeout(() => {
-        const demoGoogleUser = {
-          id: 'u_google_demo_' + Math.floor(Math.random() * 1000),
-          username: 'alex_google',
-          name: 'Alex Rivers',
-          email: 'alex.rivers@gmail.com',
-          picture: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=80',
-          provider: 'google'
-        };
-        const accounts = getStoredAccounts();
-        accounts[demoGoogleUser.email] = demoGoogleUser;
-        accounts[demoGoogleUser.username] = demoGoogleUser;
-        saveStoredAccounts(accounts);
-        setAppSession(demoGoogleUser);
-        hideSpinner();
-        showToast('Signed in with Google! Welcome Alex 🎉');
-        setTimeout(() => { window.location.href = getAppUrl('/practice'); }, 1000);
-      }, 700);
-      return;
-    }
-
-    showSpinner('Connecting to Google…');
-
-    const state = crypto.randomUUID();
-    sessionStorage.setItem('oauth_state', state);
-    sessionStorage.setItem('oauth_provider', 'google');
-
-    const params = new URLSearchParams({
-      client_id:     clientId,
-      redirect_uri:  redirectUri,
-      response_type: 'token id_token',
-      scope,
-      state,
-      nonce:         crypto.randomUUID(),
+  async function waitForFirebaseClient(timeoutMs = 5000) {
+    if (window.CodeKaroAuth) return window.CodeKaroAuth;
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => {
+        reject(new Error("Firebase SDK is still loading. Please try again in a moment."));
+      }, timeoutMs);
+      window.addEventListener("codekaro-firebase-ready", (e) => {
+        clearTimeout(timer);
+        resolve(e.detail || window.CodeKaroAuth);
+      }, { once: true });
     });
+  }
 
-    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params}`;
+  function showProviderSetupNote(providerName, errorCode) {
+    const projectId = (window.CodeKaroAuth && window.CodeKaroAuth.firebaseConfig && window.CodeKaroAuth.firebaseConfig.projectId) || 'integrated-canto-x5v9p';
+    const authDomain = (window.CodeKaroAuth && window.CodeKaroAuth.firebaseConfig && window.CodeKaroAuth.firebaseConfig.authDomain) || `${projectId}.firebaseapp.com`;
+    const consoleUrl = `https://console.firebase.google.com/project/${projectId}/authentication/providers`;
+    const html = `
+      <strong>Enable ${providerName} in Firebase Console:</strong><br/>
+      1. Open <a href="${consoleUrl}" target="_blank" rel="noopener noreferrer" style="color:var(--ck-link);text-decoration:underline;">Firebase Auth Providers (${projectId})</a><br/>
+      2. Click <strong>${providerName}</strong> &rarr; toggle <strong>Enable</strong> &rarr; Save.<br/>
+      ${providerName === 'GitHub' ? `3. In your GitHub OAuth App settings, set Authorization callback URL to:<br/><code>https://${authDomain}/__/auth/handler</code>` : ''}
+    `;
+    ['provider-help-login', 'provider-help-signup'].forEach(id => {
+      const box = document.getElementById(id);
+      if (box) {
+        box.innerHTML = html;
+        box.classList.add('is-visible');
+      }
+    });
   }
 
   /* ═══════════════════════════════════════════════════════════
-     GITHUB OAUTH
+     FIREBASE GOOGLE AUTHENTICATION (Sign In & Sign Up)
      ═══════════════════════════════════════════════════════════ */
-  function startGitHubOAuth() {
-    const { clientId, redirectUri, scope } = OAUTH_CONFIG.github;
-
-    if (!clientId || clientId === 'YOUR_GITHUB_CLIENT_ID') {
-      // Demo instant sign-in with simulated GitHub account
-      showSpinner('Signing in with GitHub Demo Account…');
-      setTimeout(() => {
-        const demoGitHubUser = {
-          id: 'u_github_demo_' + Math.floor(Math.random() * 1000),
-          username: 'octocoder',
-          name: 'Dev Sharma',
-          email: 'octocoder@github.com',
-          picture: 'https://avatars.githubusercontent.com/u/9919?v=4',
-          provider: 'github'
-        };
-        const accounts = getStoredAccounts();
-        accounts[demoGitHubUser.email] = demoGitHubUser;
-        accounts[demoGitHubUser.username] = demoGitHubUser;
-        saveStoredAccounts(accounts);
-        setAppSession(demoGitHubUser);
-        hideSpinner();
-        showToast('Signed in with GitHub! Welcome Dev 🎉');
-        setTimeout(() => { window.location.href = getAppUrl('/practice'); }, 1000);
-      }, 700);
-      return;
+  async function startGoogleOAuth() {
+    showSpinner('Connecting to Google with Firebase…');
+    try {
+      const fb = await waitForFirebaseClient();
+      const profile = await fb.signInWithGoogle();
+      const accounts = getStoredAccounts();
+      if (profile.email) accounts[profile.email.toLowerCase()] = profile;
+      accounts[profile.username.toLowerCase()] = profile;
+      saveStoredAccounts(accounts);
+      setAppSession(profile);
+      hideSpinner();
+      showToast(`Signed in with Google! Welcome, ${profile.name} 🎉`);
+      setTimeout(() => { window.location.href = getAppUrl('/practice'); }, 1000);
+    } catch (err) {
+      hideSpinner();
+      const code = err && err.code ? String(err.code) : '';
+      if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') {
+        showToast('Google sign-in popup was closed.', 'error');
+        return;
+      }
+      if (code === 'auth/operation-not-allowed' || code === 'auth/configuration-not-found') {
+        showProviderSetupNote('Google', code);
+        showToast('Please enable Google Sign-In in your Firebase Console.', 'error');
+        return;
+      }
+      showToast(err.message || 'Google authentication failed. Please try again.', 'error');
     }
-
-    showSpinner('Connecting to GitHub…');
-
-    const state = crypto.randomUUID();
-    sessionStorage.setItem('oauth_state', state);
-    sessionStorage.setItem('oauth_provider', 'github');
-
-    const params = new URLSearchParams({
-      client_id:    clientId,
-      redirect_uri: redirectUri,
-      scope,
-      state,
-    });
-
-    window.location.href = `https://github.com/login/oauth/authorize?${params}`;
   }
 
   /* ═══════════════════════════════════════════════════════════
-     OAUTH CALLBACK HANDLER (runs on redirect back)
+     FIREBASE GITHUB AUTHENTICATION (Sign In & Sign Up)
      ═══════════════════════════════════════════════════════════ */
-  function handleOAuthCallback() {
-    const hash   = new URLSearchParams(window.location.hash.slice(1));
-    const search = new URLSearchParams(window.location.search);
-
-    const provider = sessionStorage.getItem('oauth_provider');
-    const savedState = sessionStorage.getItem('oauth_state');
-    sessionStorage.removeItem('oauth_state');
-    sessionStorage.removeItem('oauth_provider');
-
-    /* ── Google implicit: token in hash fragment ── */
-    if (hash.get('access_token') && provider === 'google') {
-      const returnedState = hash.get('state');
-      if (returnedState !== savedState) {
-        showToast('Security verification failed. Please try again.', 'error');
+  async function startGitHubOAuth() {
+    showSpinner('Connecting to GitHub with Firebase…');
+    try {
+      const fb = await waitForFirebaseClient();
+      const profile = await fb.signInWithGitHub();
+      const accounts = getStoredAccounts();
+      if (profile.email) accounts[profile.email.toLowerCase()] = profile;
+      accounts[profile.username.toLowerCase()] = profile;
+      saveStoredAccounts(accounts);
+      setAppSession(profile);
+      hideSpinner();
+      showToast(`Signed in with GitHub! Welcome, ${profile.name} 🎉`);
+      setTimeout(() => { window.location.href = getAppUrl('/practice'); }, 1000);
+    } catch (err) {
+      hideSpinner();
+      const code = err && err.code ? String(err.code) : '';
+      if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') {
+        showToast('GitHub sign-in popup was closed.', 'error');
         return;
       }
-      const accessToken = hash.get('access_token');
-      history.replaceState(null, '', window.location.pathname);
-
-      showSpinner('Getting your Google profile…');
-      fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-        headers: { Authorization: 'Bearer ' + accessToken }
-      })
-      .then(r => r.json())
-      .then(user => {
-        hideSpinner();
-        const userObj = {
-          id: 'u_g_' + (user.sub || Date.now().toString(36)),
-          username: (user.email ? user.email.split('@')[0] : 'user').toLowerCase().replace(/[^a-z0-9_-]/g, '_'),
-          name: user.name || user.given_name || 'Coder',
-          email: user.email,
-          picture: user.picture,
-          provider: 'google',
-          token: accessToken
-        };
-        const accounts = getStoredAccounts();
-        accounts[userObj.email] = userObj;
-        accounts[userObj.username] = userObj;
-        saveStoredAccounts(accounts);
-        setAppSession(userObj);
-        showToast(`Welcome, ${user.given_name || user.name}! 🎉`);
-        setTimeout(() => { window.location.href = getAppUrl('/practice'); }, 1200);
-      })
-      .catch(() => {
-        hideSpinner();
-        showToast('Google sign-in failed. Try again.', 'error');
-      });
-      return;
-    }
-
-    /* ── GitHub: code in query string ── */
-    const code  = search.get('code');
-    const state = search.get('state');
-    if (code && provider === 'github') {
-      if (state !== savedState) {
-        showToast('Security verification failed. Please try again.', 'error');
+      if (code === 'auth/operation-not-allowed' || code === 'auth/configuration-not-found') {
+        showProviderSetupNote('GitHub', code);
+        showToast('Enable GitHub provider in Firebase Console to complete GitHub OAuth.', 'error');
         return;
       }
-      history.replaceState(null, '', window.location.pathname);
-
-      showSpinner('Signing in with GitHub…');
-      fetch('/api/github-callback?code=' + encodeURIComponent(code))
-        .then(r => r.json())
-        .then(data => {
-          if (data.error) throw new Error(data.error);
-          hideSpinner();
-          const user = data.user || {};
-          const userObj = {
-            id: 'u_gh_' + (user.id || Date.now().toString(36)),
-            username: (user.login || 'coder').toLowerCase(),
-            name: user.name || user.login || 'Coder',
-            email: user.email || '',
-            picture: user.avatar_url || '',
-            provider: 'github',
-            token: data.access_token
-          };
-          const accounts = getStoredAccounts();
-          if (userObj.email) accounts[userObj.email] = userObj;
-          accounts[userObj.username] = userObj;
-          saveStoredAccounts(accounts);
-          setAppSession(userObj);
-          showToast(`Welcome, ${userObj.name}! 🎉`);
-          setTimeout(() => { window.location.href = getAppUrl('/practice'); }, 1200);
-        })
-        .catch(err => {
-          hideSpinner();
-          showToast('GitHub sign-in failed. ' + (err.message || 'Please try again.'), 'error');
-        });
+      if (code === 'auth/account-exists-with-different-credential') {
+        showToast('An account already exists with the same email using another sign-in provider.', 'error');
+        return;
+      }
+      showToast(err.message || 'GitHub authentication failed. Please try again.', 'error');
     }
   }
 
@@ -1251,6 +1366,9 @@
 
   function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
+  /* ═══════════════════════════════════════════════════════════
+     LOGIN HANDLER (Firebase Email/Password + Local Account Sync)
+     ═══════════════════════════════════════════════════════════ */
   async function handleLogin(e) {
     e.preventDefault();
     clearErrs('login-email-err', 'login-pass-err');
@@ -1287,7 +1405,7 @@
       const accounts = getStoredAccounts();
       const query = identifier.toLowerCase();
 
-      // Find user by exact key or search across all stored accounts
+      // Lookup stored account in case user entered a username
       let account = accounts[query];
       if (!account) {
         for (const k of Object.keys(accounts)) {
@@ -1303,8 +1421,32 @@
         }
       }
 
-      // STRICT USER REQUIREMENT:
-      // Only users who have created an account are allowed to log in!
+      const emailToUse = identifier.includes('@') ? identifier : (account && account.email ? account.email : '');
+
+      // Try Firebase Email/Password authentication first when email is available
+      if (emailToUse) {
+        try {
+          const fb = await waitForFirebaseClient();
+          const fbProfile = await fb.signInWithEmail(emailToUse, pass);
+          accounts[emailToUse.toLowerCase()] = { ...(account || {}), ...fbProfile };
+          accounts[fbProfile.username.toLowerCase()] = { ...(account || {}), ...fbProfile };
+          saveStoredAccounts(accounts);
+          setAppSession(fbProfile);
+          btn.disabled = false;
+          btn.innerHTML = '<span>Sign In to CodeKaro</span>';
+          showToast(`Welcome back, ${fbProfile.name || fbProfile.username}! 🎉`);
+          setTimeout(() => { window.location.href = getAppUrl('/practice'); }, 1000);
+          return;
+        } catch (fbErr) {
+          const fbCode = fbErr && fbErr.code ? String(fbErr.code) : '';
+          if (fbCode === 'auth/wrong-password' || fbCode === 'auth/invalid-credential') {
+            if (!account) {
+              throw new Error('Invalid email or password.');
+            }
+          }
+        }
+      }
+
       if (!account) {
         btn.disabled = false;
         btn.innerHTML = '<span>Sign In to CodeKaro</span>';
@@ -1316,7 +1458,6 @@
         return;
       }
 
-      // Verify password against stored salt + hash
       if (account.salt && account.hash) {
         const testHash = await hashPassword(pass, account.salt);
         if (testHash !== account.hash) {
@@ -1336,6 +1477,129 @@
     }
   }
 
+  /* ═══════════════════════════════════════════════════════════
+     SIGNUP WITH EMAIL OTP + FIREBASE AUTHENTICATION
+     ═══════════════════════════════════════════════════════════ */
+  let pendingSignup = null; // { name, email, pass }
+  let lastPreviewOtp = '';
+  let otpExpiryInterval = null;
+  let otpResendInterval = null;
+
+  function getOtpDigitsElements() {
+    return [1, 2, 3, 4, 5, 6].map(i => document.getElementById('otp-d' + i));
+  }
+
+  function getEnteredOtpValue() {
+    return getOtpDigitsElements().map(el => (el ? el.value.trim() : '')).join('');
+  }
+
+  function clearOtpInputs() {
+    getOtpDigitsElements().forEach(el => {
+      if (el) {
+        el.value = '';
+        el.classList.remove('has-error');
+      }
+    });
+    setErr('signup-otp-err', '');
+  }
+
+  function autofillPreviewOtp() {
+    if (!lastPreviewOtp || lastPreviewOtp.length !== 6) return;
+    const els = getOtpDigitsElements();
+    for (let i = 0; i < 6; i++) {
+      if (els[i]) {
+        els[i].value = lastPreviewOtp[i];
+        els[i].classList.remove('has-error');
+      }
+    }
+    setErr('signup-otp-err', '');
+    if (els[5]) els[5].focus();
+  }
+
+  function startOtpTimers(expiresInSeconds = 600, resendCooldownSeconds = 30) {
+    if (otpExpiryInterval) clearInterval(otpExpiryInterval);
+    if (otpResendInterval) clearInterval(otpResendInterval);
+
+    let remaining = expiresInSeconds;
+    const timerEl = document.getElementById('otp-expiry-timer');
+    const updateExpiryDisplay = () => {
+      if (!timerEl) return;
+      const mins = String(Math.floor(remaining / 60)).padStart(2, '0');
+      const secs = String(remaining % 60).padStart(2, '0');
+      timerEl.textContent = `${mins}:${secs}`;
+    };
+    updateExpiryDisplay();
+    otpExpiryInterval = setInterval(() => {
+      remaining = Math.max(0, remaining - 1);
+      updateExpiryDisplay();
+      if (remaining <= 0) {
+        clearInterval(otpExpiryInterval);
+      }
+    }, 1000);
+
+    let cooldown = resendCooldownSeconds;
+    const resendBtn = document.getElementById('otp-resend-btn');
+    if (resendBtn) {
+      resendBtn.disabled = true;
+      resendBtn.textContent = `Resend OTP (${cooldown}s)`;
+      otpResendInterval = setInterval(() => {
+        cooldown = Math.max(0, cooldown - 1);
+        if (cooldown > 0) {
+          resendBtn.textContent = `Resend OTP (${cooldown}s)`;
+        } else {
+          clearInterval(otpResendInterval);
+          resendBtn.disabled = false;
+          resendBtn.textContent = 'Resend OTP';
+        }
+      }, 1000);
+    }
+  }
+
+  function showOtpVerificationStep(email, previewOtp) {
+    document.getElementById('signup-step-1').classList.add('is-hidden');
+    document.getElementById('signup-otp-step').classList.add('is-active');
+    document.getElementById('otp-target-email').textContent = email;
+
+    const banner = document.getElementById('otp-preview-banner');
+    const codeEl = document.getElementById('otp-preview-code');
+    if (previewOtp) {
+      lastPreviewOtp = String(previewOtp);
+      if (codeEl) codeEl.textContent = lastPreviewOtp;
+      if (banner) banner.classList.add('is-visible');
+    } else {
+      lastPreviewOtp = '';
+      if (banner) banner.classList.remove('is-visible');
+    }
+
+    clearOtpInputs();
+    startOtpTimers(600, 30);
+    setTimeout(() => {
+      const first = document.getElementById('otp-d1');
+      if (first) first.focus();
+    }, 60);
+  }
+
+  function backToSignupForm() {
+    if (otpExpiryInterval) clearInterval(otpExpiryInterval);
+    if (otpResendInterval) clearInterval(otpResendInterval);
+    document.getElementById('signup-otp-step').classList.remove('is-active');
+    document.getElementById('signup-step-1').classList.remove('is-hidden');
+    setErr('signup-otp-err', '');
+  }
+
+  async function requestEmailOtp(name, email) {
+    const res = await fetch('/api/auth/send-otp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email }),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.ok) {
+      throw new Error(data.error || 'Could not send verification OTP.');
+    }
+    return data;
+  }
+
   async function handleSignup(e) {
     e.preventDefault();
     clearErrs('signup-name-err','signup-email-err','signup-pass-err','signup-terms-err');
@@ -1346,21 +1610,18 @@
     let ok = true;
     if (name.length < 2)       { setErr('signup-name-err',  'Please enter your full name.'); ok = false; }
     if (!isValidEmail(email))  { setErr('signup-email-err', 'Please enter a valid email.'); ok = false; }
-    if (pass.length < 6)       { setErr('signup-pass-err',  'Password must be at least 6 characters.'); ok = false; }
+    if (pass.length < 8)       { setErr('signup-pass-err',  'Password must be at least 8 characters.'); ok = false; }
     if (!terms)                { setErr('signup-terms-err', 'You must accept the Terms & Privacy Policy.'); ok = false; }
     if (!ok) return;
 
     const btn = document.getElementById('signup-submit');
     btn.disabled = true;
-    btn.innerHTML = '<span>Creating account…</span>';
+    btn.innerHTML = '<span>Sending OTP…</span>';
 
     try {
       const accounts = getStoredAccounts();
       const emailKey = email.toLowerCase();
-      const usernameKey = email.split('@')[0].toLowerCase().replace(/[^a-z0-9_-]/g, '_');
-
-      // Check if user already exists
-      let existing = accounts[emailKey] || accounts[usernameKey];
+      let existing = accounts[emailKey];
       if (!existing) {
         for (const k of Object.keys(accounts)) {
           if (accounts[k]?.email?.toLowerCase() === emailKey) {
@@ -1371,7 +1632,7 @@
       }
       if (existing) {
         btn.disabled = false;
-        btn.innerHTML = '<span>Create My Account</span>';
+        btn.innerHTML = '<span>Send Verification OTP</span>';
         setErr(
           'signup-email-err',
           'An account with this email already exists. <a href="#" onclick="switchTab(\'login\');return false;" style="color:var(--ck-link);text-decoration:underline;font-weight:600">Log in here →</a>',
@@ -1380,34 +1641,184 @@
         return;
       }
 
+      pendingSignup = { name, email, pass };
+      const otpData = await requestEmailOtp(name, email);
+
+      btn.disabled = false;
+      btn.innerHTML = '<span>Send Verification OTP</span>';
+      showOtpVerificationStep(email, otpData.previewOtp);
+      showToast(otpData.deliveryMode === 'smtp'
+        ? `6-digit OTP sent to ${email}`
+        : `Verification OTP generated for ${email}`);
+    } catch (err) {
+      btn.disabled = false;
+      btn.innerHTML = '<span>Send Verification OTP</span>';
+      setErr('signup-email-err', err.message || 'Could not send OTP.');
+    }
+  }
+
+  async function resendSignupOtp() {
+    if (!pendingSignup) return;
+    const resendBtn = document.getElementById('otp-resend-btn');
+    if (resendBtn) {
+      resendBtn.disabled = true;
+      resendBtn.textContent = 'Sending…';
+    }
+    try {
+      const otpData = await requestEmailOtp(pendingSignup.name, pendingSignup.email);
+      showOtpVerificationStep(pendingSignup.email, otpData.previewOtp);
+      showToast(`New 6-digit OTP sent to ${pendingSignup.email}`);
+    } catch (err) {
+      if (resendBtn) {
+        resendBtn.disabled = false;
+        resendBtn.textContent = 'Resend OTP';
+      }
+      setErr('signup-otp-err', err.message || 'Failed to resend OTP.');
+    }
+  }
+
+  async function handleVerifyOtp(e) {
+    e.preventDefault();
+    setErr('signup-otp-err', '');
+
+    if (!pendingSignup) {
+      backToSignupForm();
+      return;
+    }
+
+    const otp = getEnteredOtpValue();
+    if (!/^\d{6}$/.test(otp)) {
+      getOtpDigitsElements().forEach(el => {
+        if (el && !el.value.trim()) el.classList.add('has-error');
+      });
+      setErr('signup-otp-err', 'Please enter all 6 digits of your verification code.');
+      return;
+    }
+
+    const btn = document.getElementById('otp-verify-submit');
+    btn.disabled = true;
+    btn.innerHTML = '<span>Verifying OTP &amp; Creating Account…</span>';
+
+    try {
+      // 1. Verify OTP with backend
+      const verifyRes = await fetch('/api/auth/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: pendingSignup.email, otp }),
+      });
+      const verifyData = await verifyRes.json();
+      if (!verifyRes.ok || !verifyData.verified) {
+        getOtpDigitsElements().forEach(el => el && el.classList.add('has-error'));
+        throw new Error(verifyData.error || 'Invalid OTP code.');
+      }
+
+      // 2. Register user in Firebase Auth + Firestore
+      const { name, email, pass } = pendingSignup;
+      const emailKey = email.toLowerCase();
+      const usernameKey = email.split('@')[0].toLowerCase().replace(/[^a-z0-9_-]/g, '_') || 'coder';
       const salt = generateSalt();
       const hash = await hashPassword(pass, salt);
+
+      let syncedProfile = null;
+      try {
+        const fb = await waitForFirebaseClient();
+        syncedProfile = await fb.signUpWithEmailAfterOtp(name, email, pass);
+      } catch (fbErr) {
+        const fbCode = fbErr && fbErr.code ? String(fbErr.code) : '';
+        if (fbCode === 'auth/email-already-in-use') {
+          backToSignupForm();
+          setErr(
+            'signup-email-err',
+            'This email is already registered in Firebase. <a href="#" onclick="switchTab(\'login\');return false;" style="color:var(--ck-link);text-decoration:underline;font-weight:600">Log in here →</a>',
+            true
+          );
+          btn.disabled = false;
+          btn.innerHTML = '<span>Verify OTP &amp; Create Account</span>';
+          return;
+        }
+        if (fbCode === 'auth/operation-not-allowed' || fbCode === 'auth/configuration-not-found') {
+          showProviderSetupNote('Email/Password', fbCode);
+        } else {
+          console.warn('Firebase Email signup warning:', fbErr);
+        }
+      }
+
       const newUser = {
-        id: "u_" + usernameKey + "_" + Date.now().toString(36),
-        username: usernameKey,
+        id: (syncedProfile && syncedProfile.id) || ("u_" + usernameKey + "_" + Date.now().toString(36)),
+        uid: (syncedProfile && syncedProfile.uid) || "",
+        username: (syncedProfile && syncedProfile.username) || usernameKey,
         name: name,
         email: email,
         salt: salt,
         hash: hash,
-        provider: 'local',
+        provider: 'email',
+        otpVerified: true,
         createdAt: Date.now()
       };
 
+      const accounts = getStoredAccounts();
       accounts[emailKey] = newUser;
-      accounts[usernameKey] = newUser;
+      accounts[newUser.username] = newUser;
       saveStoredAccounts(accounts);
       setAppSession(newUser);
 
+      if (otpExpiryInterval) clearInterval(otpExpiryInterval);
+      if (otpResendInterval) clearInterval(otpResendInterval);
+
       btn.disabled = false;
-      btn.innerHTML = '<span>Create My Account</span>';
-      showToast('Account created successfully! Welcome to CodeKaro 🎉');
+      btn.innerHTML = '<span>Verify OTP &amp; Create Account</span>';
+      showToast('Email OTP verified! Welcome to CodeKaro 🎉');
       setTimeout(() => { window.location.href = getAppUrl('/practice'); }, 1100);
     } catch (err) {
       btn.disabled = false;
-      btn.innerHTML = '<span>Create My Account</span>';
-      setErr('signup-email-err', err.message || 'Could not create account.');
+      btn.innerHTML = '<span>Verify OTP &amp; Create Account</span>';
+      setErr('signup-otp-err', err.message || 'Verification failed. Please try again.');
     }
   }
+
+  /* ── Wire up 6-digit OTP input keyboard & paste UX ── */
+  (function initOtpInputs() {
+    const els = getOtpDigitsElements();
+    els.forEach((input, idx) => {
+      if (!input) return;
+
+      input.addEventListener('input', (e) => {
+        const val = e.target.value.replace(/\D/g, '');
+        e.target.value = val ? val.slice(-1) : '';
+        e.target.classList.remove('has-error');
+        setErr('signup-otp-err', '');
+        if (e.target.value && idx < els.length - 1) {
+          els[idx + 1].focus();
+        }
+      });
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !input.value && idx > 0) {
+          els[idx - 1].focus();
+          els[idx - 1].value = '';
+        } else if (e.key === 'ArrowLeft' && idx > 0) {
+          e.preventDefault();
+          els[idx - 1].focus();
+        } else if (e.key === 'ArrowRight' && idx < els.length - 1) {
+          e.preventDefault();
+          els[idx + 1].focus();
+        }
+      });
+
+      input.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 6);
+        if (!pasted) return;
+        for (let i = 0; i < els.length; i++) {
+          els[i].value = pasted[i] || '';
+          els[i].classList.remove('has-error');
+        }
+        setErr('signup-otp-err', '');
+        const focusIdx = Math.min(pasted.length, els.length - 1);
+        els[focusIdx].focus();
+      });
+    });
+  })();
 
   /* ── Password visibility ── */
   function togglePwd(id, btn) {
@@ -1437,7 +1848,7 @@
   }
 
   /* ── Forgot password ── */
-  function showForgot(e) {
+  async function showForgot(e) {
     e.preventDefault();
     const identifier = document.getElementById('login-email').value.trim();
     if (!identifier) {
@@ -1457,6 +1868,17 @@
           account = acc;
           break;
         }
+      }
+    }
+    const targetEmail = isValidEmail(identifier) ? identifier : (account && account.email ? account.email : '');
+    if (targetEmail) {
+      try {
+        const fb = await waitForFirebaseClient();
+        await fb.sendPasswordReset(targetEmail);
+        showToast('Password reset link sent to ' + targetEmail);
+        return;
+      } catch (err) {
+        // Fallback if user only exists locally
       }
     }
     if (!account) {
@@ -1500,25 +1922,11 @@
   }
 
   /* ═══════════════════════════════════════════════════════════
-     INIT — URL param tab + OAuth callback detection
+     INIT — URL param tab
      ═══════════════════════════════════════════════════════════ */
   (function init() {
-    // Tab from URL
     const tab = new URLSearchParams(location.search).get('auth');
     if (tab === 'signup') switchTab('signup');
-
-    // OAuth callback
-    const hasHash   = window.location.hash.includes('access_token');
-    const hasCode   = new URLSearchParams(window.location.search).has('code');
-    const hasError  = new URLSearchParams(window.location.search).has('error');
-
-    if (hasError) {
-      const err = new URLSearchParams(window.location.search).get('error_description') || 'OAuth was cancelled.';
-      history.replaceState(null, '', window.location.pathname);
-      showToast(err, 'error');
-    } else if (hasHash || hasCode) {
-      handleOAuthCallback();
-    }
   })();
   </script>
 </body>
