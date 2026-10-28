@@ -245,7 +245,25 @@ class AppHandler(BaseHTTPRequestHandler):
             "/tokens.css": ("tokens.css", "text/css; charset=utf-8"),
             "/404": ("404.html", "text/html; charset=utf-8"),
             "/404.html": ("404.html", "text/html; charset=utf-8"),
+            "/assets/index.js": ("assets/index.js", "application/javascript; charset=utf-8"),
+            "/assets/index.css": ("assets/index.css", "text/css; charset=utf-8"),
         }
+
+        if norm_path.startswith("/assets/"):
+            rel_asset = norm_path.lstrip("/")
+            for search_dir in (WEB, ROOT / "dist", ROOT / "public"):
+                candidate = search_dir / rel_asset
+                if candidate.is_file():
+                    content_type = "application/javascript; charset=utf-8" if norm_path.endswith(".js") else ("text/css; charset=utf-8" if norm_path.endswith(".css") else "application/octet-stream")
+                    try:
+                        self.send_bytes(200, candidate.read_bytes(), content_type)
+                        return
+                    except OSError:
+                        pass
+
+        target = None
+        content_type = None
+
         if norm_path in static_files:
             filename, content_type = static_files[norm_path]
             target = WEB / filename
@@ -255,11 +273,16 @@ class AppHandler(BaseHTTPRequestHandler):
         else:
             rel_path = norm_path.lstrip("/")
             web_root = WEB.resolve()
+            public_root = (ROOT / "public").resolve()
             file_candidate = (web_root / rel_path).resolve()
+            if not (file_candidate.is_file() and file_candidate.is_relative_to(web_root)):
+                pub_candidate = (public_root / rel_path).resolve()
+                if pub_candidate.is_file() and pub_candidate.is_relative_to(public_root):
+                    file_candidate = pub_candidate
 
             if (
                 file_candidate.is_file()
-                and file_candidate.is_relative_to(web_root)
+                and (file_candidate.is_relative_to(web_root) or file_candidate.is_relative_to(public_root))
             ):
                 target = file_candidate
                 ext = file_candidate.suffix.lower()
@@ -280,36 +303,20 @@ class AppHandler(BaseHTTPRequestHandler):
                 content_type = mime_types.get(
                     ext, "application/octet-stream"
                 )
-            else:
-                page_404 = WEB / "404.html"
-                if not page_404.is_file():
-                    page_404 = ROOT / "public" / "404.html"
-                try:
-                    body_404 = page_404.read_bytes()
-                    self.send_bytes(404, body_404, "text/html; charset=utf-8")
-                except OSError:
-                    self.send_json(404, {"error": "Page not found."})
-                return
-            "/assets/index.js": ("assets/index.js", "application/javascript; charset=utf-8"),
-            "/assets/index.css": ("assets/index.css", "text/css; charset=utf-8"),
-        }
-        if norm_path.startswith("/assets/"):
-            rel_asset = norm_path.lstrip("/")
-            for search_dir in (WEB, ROOT / "dist", ROOT / "public"):
-                candidate = search_dir / rel_asset
-                if candidate.is_file():
-                    content_type = "application/javascript; charset=utf-8" if norm_path.endswith(".js") else ("text/css; charset=utf-8" if norm_path.endswith(".css") else "application/octet-stream")
-                    try:
-                        self.send_bytes(200, candidate.read_bytes(), content_type)
-                        return
-                    except OSError:
-                        pass
-        if norm_path not in static_files:
-            self.send_json(404, {"error": "Page not found."})
+
+        if not target or not target.is_file():
+            page_404 = WEB / "404.html"
+            if not page_404.is_file():
+                page_404 = ROOT / "public" / "404.html"
+            try:
+                body_404 = page_404.read_bytes()
+                self.send_bytes(404, body_404, "text/html; charset=utf-8")
+            except OSError:
+                self.send_json(404, {"error": "Page not found."})
             return
-        filename, content_type = static_files[norm_path]
+
         try:
-            body = (WEB / filename).read_bytes()
+            body = target.read_bytes()
         except OSError as error:
             self.send_json(500, {"error": f"Could not read app file: {error}"})
             return

@@ -107,17 +107,51 @@
     syncHomeAuthState();
     window.addEventListener("storage", syncHomeAuthState);
 
+    let closeTimeout = null;
     const setAuthMenuOpen = open => {
+      if (closeTimeout) {
+        clearTimeout(closeTimeout);
+        closeTimeout = null;
+      }
       authButton.setAttribute("aria-expanded", String(open));
       authMenu.dataset.open = String(open);
     };
-    authMenu.addEventListener("pointerenter", () => setAuthMenuOpen(true));
-    authMenu.addEventListener("pointerleave", () => {
-      if (!authMenu.contains(document.activeElement)) setAuthMenuOpen(false);
+
+    authMenu.addEventListener("pointerenter", () => {
+      setAuthMenuOpen(true);
     });
+
+    authMenu.addEventListener("pointerleave", () => {
+      if (closeTimeout) clearTimeout(closeTimeout);
+      closeTimeout = setTimeout(() => {
+        if (!authMenu.contains(document.activeElement)) {
+          setAuthMenuOpen(false);
+        }
+      }, 200);
+    });
+
     authMenu.addEventListener("focusin", () => setAuthMenuOpen(true));
     authMenu.addEventListener("focusout", event => {
       if (!authMenu.contains(event.relatedTarget)) setAuthMenuOpen(false);
+    });
+
+    authButton.addEventListener("click", event => {
+      event.stopPropagation();
+      const isOpen = authMenu.dataset.open === "true";
+      setAuthMenuOpen(!isOpen);
+    });
+
+    document.addEventListener("click", event => {
+      if (!authMenu.contains(event.target)) {
+        setAuthMenuOpen(false);
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && authMenu.dataset.open === "true") {
+        setAuthMenuOpen(false);
+        authButton.focus();
+      }
     });
   }
 

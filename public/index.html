@@ -422,6 +422,15 @@
       backdrop-filter: blur(18px);
     }
 
+    .home-auth__panel::before {
+      content: "";
+      position: absolute;
+      top: -20px;
+      left: 0;
+      right: 0;
+      height: 20px;
+    }
+
     .home-auth:hover .home-auth__panel,
     .home-auth:focus-within .home-auth__panel,
     .home-auth[data-open="true"] .home-auth__panel {
